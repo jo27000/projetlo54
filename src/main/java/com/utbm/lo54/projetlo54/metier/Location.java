@@ -11,40 +11,41 @@ import java.util.Objects;
  *
  * @author jdugard
  */
-public class Course {
+public class Location {
 
-    private String code;
-    private String title;
+    private Integer id;
 
-    public Course() {
+    private String city;
+
+    public Location() {
     }
 
-    public Course(String code, String title) {
-        this.code = code;
-        this.title = title;
+    public Location(Integer id, String city) {
+        this.id = id;
+        this.city = city;
     }
 
-    public String getCode() {
-        return code;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCity() {
+        return city;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.code);
-        hash = 89 * hash + Objects.hashCode(this.title);
+        int hash = 5;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.city);
         return hash;
     }
 
@@ -59,11 +60,11 @@ public class Course {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Course other = (Course) obj;
-        if (!Objects.equals(this.code, other.code)) {
+        final Location other = (Location) obj;
+        if (!Objects.equals(this.city, other.city)) {
             return false;
         }
-        if (!Objects.equals(this.title, other.title)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
@@ -71,7 +72,7 @@ public class Course {
 
     @Override
     public String toString() {
-        return "Course{" + "code=" + code + ", title=" + title + '}';
+        return "Location{" + "id=" + id + ", city=" + city + '}';
     }
 
 }
