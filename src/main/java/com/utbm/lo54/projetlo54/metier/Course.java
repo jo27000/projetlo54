@@ -6,14 +6,26 @@
 package com.utbm.lo54.projetlo54.metier;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author jdugard
  */
+@Entity
+@Table(name = "COURSE")
 public class Course {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "CODE", nullable = false)
     private String code;
+
+    @Column(name = "TITLE", nullable = false)
     private String title;
 
     public Course() {

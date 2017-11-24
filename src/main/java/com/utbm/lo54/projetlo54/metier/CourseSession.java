@@ -5,29 +5,55 @@
  */
 package com.utbm.lo54.projetlo54.metier;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author jdugard
  */
-public class SessionCourse {
+@Entity
+@Table(name = "COURSE_SESSION")
+public class CourseSession implements Serializable {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "ID")
     private Integer id;
+
+    @Column(name = "START_DATE", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar startDate;
+
+    @Column(name = "END_DATE", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar endDate;
-    private String code;
+
+    @Column(name = "COURSE_CODE", nullable = false)
+    private Course courseCode;
+
+    @ManyToOne
+    @JoinColumn(name = "LOCATION_ID")
     private Location location;
 
-    public SessionCourse() {
+    public CourseSession() {
     }
 
-    public SessionCourse(Integer id, Calendar startDate, Calendar endDate, String code, Location location) {
+    public CourseSession(Integer id, Calendar startDate, Calendar endDate, Course courseCode, Location location) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.code = code;
+        this.courseCode = courseCode;
         this.location = location;
     }
 
@@ -55,14 +81,6 @@ public class SessionCourse {
         this.endDate = endDate;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public Location getLocation() {
         return location;
     }
@@ -71,14 +89,27 @@ public class SessionCourse {
         this.location = location;
     }
 
+    public Course getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(Course courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    @Override
+    public String toString() {
+        return "SessionCourse{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", courseCode=" + courseCode + ", location=" + location + '}';
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.startDate);
-        hash = 97 * hash + Objects.hashCode(this.endDate);
-        hash = 97 * hash + Objects.hashCode(this.code);
-        hash = 97 * hash + Objects.hashCode(this.location);
+        hash = 73 * hash + Objects.hashCode(this.id);
+        hash = 73 * hash + Objects.hashCode(this.startDate);
+        hash = 73 * hash + Objects.hashCode(this.endDate);
+        hash = 73 * hash + Objects.hashCode(this.courseCode);
+        hash = 73 * hash + Objects.hashCode(this.location);
         return hash;
     }
 
@@ -93,10 +124,7 @@ public class SessionCourse {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SessionCourse other = (SessionCourse) obj;
-        if (!Objects.equals(this.code, other.code)) {
-            return false;
-        }
+        final CourseSession other = (CourseSession) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -106,15 +134,13 @@ public class SessionCourse {
         if (!Objects.equals(this.endDate, other.endDate)) {
             return false;
         }
+        if (!Objects.equals(this.courseCode, other.courseCode)) {
+            return false;
+        }
         if (!Objects.equals(this.location, other.location)) {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "SessionCourse{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", code=" + code + ", location=" + location + '}';
     }
 
 }

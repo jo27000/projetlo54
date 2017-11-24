@@ -6,15 +6,26 @@
 package com.utbm.lo54.projetlo54.metier;
 
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  *
  * @author jdugard
  */
+@Entity
+@Table(name = "LOCATION")
 public class Location {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "ID")
     private Integer id;
 
+    @Column(name = "CITY", nullable = false)
     private String city;
 
     public Location() {

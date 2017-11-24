@@ -5,26 +5,47 @@
  */
 package com.utbm.lo54.projetlo54.metier;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author jdugard
  */
-public class Client {
+@Entity
+@Table(name = "CLIENT")
+public class Client implements Serializable {
 
+    @Id
+    @GeneratedValue
+    @Column(name = "ID")
     private Integer id;
+
+    @Column(name = "LASTNAME")
     private String lastName;
+    @Column(name = "FIRSTNAME")
     private String firstName;
+    @Column(name = "ADDRESS")
     private String address;
+    @Column(name = "PHONE")
     private String phoneNumber;
+    @Column(name = "EMAIL")
     private String email;
-    private SessionCourse sessionCourse;
+    @OneToMany
+    @JoinColumn(name = "COURSE_SESSION_ID")
+    private CourseSession sessionCourse;
 
     public Client() {
     }
 
-    public Client(Integer id, String lastName, String firstName, String address, String phoneNumber, String email, SessionCourse sessionCourse) {
+    public Client(Integer id, String lastName, String firstName, String address, String phoneNumber, String email, CourseSession sessionCourse) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -82,11 +103,11 @@ public class Client {
         this.email = email;
     }
 
-    public SessionCourse getSessionCourse() {
+    public CourseSession getSessionCourse() {
         return sessionCourse;
     }
 
-    public void setSessionCourse(SessionCourse sessionCourse) {
+    public void setSessionCourse(CourseSession sessionCourse) {
         this.sessionCourse = sessionCourse;
     }
 
