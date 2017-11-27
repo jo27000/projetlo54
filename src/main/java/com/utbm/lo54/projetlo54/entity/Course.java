@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.utbm.lo54.projetlo54.metier;
+package com.utbm.lo54.projetlo54.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,12 +19,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "COURSE")
-public class Course {
+public class Course implements Serializable {
 
     @Id
     @GeneratedValue
     @Column(name = "CODE", nullable = false)
-    private String code;
+    private Integer code;
 
     @Column(name = "TITLE", nullable = false)
     private String title;
@@ -31,16 +32,16 @@ public class Course {
     public Course() {
     }
 
-    public Course(String code, String title) {
+    public Course(Integer code, String title) {
         this.code = code;
         this.title = title;
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 

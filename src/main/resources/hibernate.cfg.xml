@@ -49,10 +49,10 @@ Contributor(s):
 
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping class="com.utbm.lo54.projetlo54.metier.Client"/>
-        <mapping class="com.utbm.lo54.projetlo54.metier.Course"/>
-        <mapping class="com.utbm.lo54.projetlo54.metier.CourseSession"/>
-        <mapping class="com.utbm.lo54.projetlo54.metier.Location"/>
+        <mapping class="com.utbm.lo54.projetlo54.entity.Client"/>
+        <mapping class="com.utbm.lo54.projetlo54.entity.Course"/>
+        <mapping class="com.utbm.lo54.projetlo54.entity.CourseSession"/>
+        <mapping class="com.utbm.lo54.projetlo54.entity.Location"/>
 
 
     </session-factory>

@@ -6,7 +6,7 @@
 package com.utbm.lo54.projetlo54.persistence;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.AnnotationConfiguration;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory
@@ -20,11 +20,11 @@ public class HibernateUtil {
 
     static {
         try {
-            // Create the SessionFactory from standard (hibernate.cfg.xml) 
+            // Create the SessionFactory from standard (hibernate.cfg.xml)
             // config file.
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+            sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
         } catch (Throwable ex) {
-            // Log the exception. 
+            // Log the exception.
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.utbm.lo54.projetlo54.metier;
+package com.utbm.lo54.projetlo54.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -38,7 +38,7 @@ public class Client implements Serializable {
     private String phoneNumber;
     @Column(name = "EMAIL")
     private String email;
-    @OneToMany
+    @OneToOne(targetEntity = CourseSession.class)
     @JoinColumn(name = "COURSE_SESSION_ID")
     private CourseSession sessionCourse;
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.utbm.lo54.projetlo54.metier;
+package com.utbm.lo54.projetlo54.entity;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -39,11 +39,12 @@ public class CourseSession implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar endDate;
 
-    @Column(name = "COURSE_CODE", nullable = false)
-    private Course courseCode;
+    @ManyToOne
+    @JoinColumn(name = "COURSE_CODE", nullable = false)
+    private Course course;
 
     @ManyToOne
-    @JoinColumn(name = "LOCATION_ID")
+    @JoinColumn(name = "LOCATION_ID", nullable = false)
     private Location location;
 
     public CourseSession() {
@@ -53,7 +54,7 @@ public class CourseSession implements Serializable {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.courseCode = courseCode;
+        this.course = courseCode;
         this.location = location;
     }
 
@@ -89,17 +90,17 @@ public class CourseSession implements Serializable {
         this.location = location;
     }
 
-    public Course getCourseCode() {
-        return courseCode;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCourseCode(Course courseCode) {
-        this.courseCode = courseCode;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override
     public String toString() {
-        return "SessionCourse{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", courseCode=" + courseCode + ", location=" + location + '}';
+        return "SessionCourse{" + "id=" + id + ", startDate=" + startDate + ", endDate=" + endDate + ", courseCode=" + course + ", location=" + location + '}';
     }
 
     @Override
@@ -108,7 +109,7 @@ public class CourseSession implements Serializable {
         hash = 73 * hash + Objects.hashCode(this.id);
         hash = 73 * hash + Objects.hashCode(this.startDate);
         hash = 73 * hash + Objects.hashCode(this.endDate);
-        hash = 73 * hash + Objects.hashCode(this.courseCode);
+        hash = 73 * hash + Objects.hashCode(this.course);
         hash = 73 * hash + Objects.hashCode(this.location);
         return hash;
     }
@@ -134,7 +135,7 @@ public class CourseSession implements Serializable {
         if (!Objects.equals(this.endDate, other.endDate)) {
             return false;
         }
-        if (!Objects.equals(this.courseCode, other.courseCode)) {
+        if (!Objects.equals(this.course, other.course)) {
             return false;
         }
         if (!Objects.equals(this.location, other.location)) {
