@@ -9,6 +9,7 @@ import com.utbm.lo54.projetlo54.entity.CourseSession;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.CourseSessionService;
 import com.utbm.lo54.projetlo54.persistence.CourseSessionDaoImpl;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -56,6 +57,16 @@ public class CourseSessionServiceImpl implements CourseSessionService {
     @Override
     public CourseSession getByLocationId(Integer locationId) throws Exception {
         return courseSessionDao.getByLocationId(locationId);
+    }
+
+    @Override
+    public List<CourseSession> getAll(int index, int size, String sortField, String sortOrder) {
+        return courseSessionDao.getAll(index, size, sortField, sortOrder);
+    }
+
+    @Override
+    public int getCount() {
+        return courseSessionDao.getCount();
     }
 
 }

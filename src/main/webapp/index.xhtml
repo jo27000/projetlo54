@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Catalogue LO54</title>
+    </h:head>
+
+    <h:body>
+        <h:form id="form">
+            <p:dataTable var="courseSession" value="#{courseSessionLazyView.lazyModel}" filteredValue="#{courseSessionLazyView.filteredCourseSessionList}" paginator="true" rows="5"
+                         widgetVar="courseSessionTable" emptyMessage="Aucune session correspondant à la recherche" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                         rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{courseSessionLazyView.selectedCourseSession}" id="courseSessionTable" lazy="true">
+                <p:ajax event="rowSelect" listener="#{courseSessionLazyView.onRowSelect}" update=":form:courseSessionDetail" oncomplete="PF('courseSessionDialog').show()" />
+                <p:column headerText="Type de formation" sortBy="#{courseSession.course.title}" filterBy="#{courseSession.course.title}">
+                    <h:outputText value="#{courseSession.course.title}" />
+                </p:column>
+
+                <p:column filterBy="#{courseSession.location.city}" headerText="Lieu" footerText="exact" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('courseSessionTable').filter()" >
+                            <f:selectItem itemLabel="Choisir une ville" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItems value="#{courseSessionLazyView.cities}" />
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{courseSession.location.city}" />
+                </p:column>
+
+
+            </p:dataTable>
+
+
+
+
+
+
+            <p:dialog header="Détail de la session" widgetVar="courseSessionDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="courseSessionDetail" style="text-align:center;">
+                    <p:panelGrid  columns="2" rendered="#{not empty courseLazyView.selectedCourse}" columnClasses="label,value">
+                        <h:outputText value="Id:" />
+                        <h:outputText value="#{courseSessionLazyView.selectedCourseSession.id}" />
+
+                        <h:outputText value="Lieu" />
+                        <h:outputText value="#{courseSessionLazyView.selectedCourseSession.location.city}" />
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>

@@ -7,7 +7,10 @@ package com.utbm.lo54.projetlo54.persistence;
 
 import com.utbm.lo54.projetlo54.entity.Client;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.ClientService;
+import java.util.List;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 
 /**
  *
@@ -32,7 +35,6 @@ public class ClientDaoImpl implements ClientService {
     @Override
     public Client read(Integer id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
 
         Client c = (Client) session.get(Client.class, id);
         session.close();
@@ -94,6 +96,30 @@ public class ClientDaoImpl implements ClientService {
     @Override
     public Client getBySessionCourseId(Integer sessionCourseId) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Client> getAll(int index, int size, String sortField, String sortOrder) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("From Client");
+
+        Query selectQuery = session.createQuery("From Foo");
+        selectQuery.setFirstResult(index);
+        selectQuery.setMaxResults(size);
+        List<Client> clientList = query.list();
+        session.close();
+
+        return clientList;
+    }
+
+    @Override
+    public int getCount() {
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        Integer count = (Integer) session.createCriteria("Client").setProjection(Projections.rowCount()).uniqueResult();
+
+        session.close();
+        return count;
     }
 
 }

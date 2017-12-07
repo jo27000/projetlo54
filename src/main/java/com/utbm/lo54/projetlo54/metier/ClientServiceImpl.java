@@ -8,6 +8,7 @@ package com.utbm.lo54.projetlo54.metier;
 import com.utbm.lo54.projetlo54.entity.Client;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.ClientService;
 import com.utbm.lo54.projetlo54.persistence.ClientDaoImpl;
+import java.util.List;
 
 /**
  *
@@ -71,6 +72,16 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client getBySessionCourseId(Integer sessionCourseId) throws Exception {
         return clientDao.getBySessionCourseId(sessionCourseId);
+    }
+
+    @Override
+    public List<Client> getAll(int index, int size, String sortField, String sortOrder) {
+        return clientDao.getAll(index, size, sortField, sortOrder);
+    }
+
+    @Override
+    public int getCount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

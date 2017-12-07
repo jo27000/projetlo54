@@ -8,7 +8,11 @@ package com.utbm.lo54.projetlo54.persistence;
 import com.utbm.lo54.projetlo54.entity.CourseSession;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.CourseSessionService;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
+import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projections;
 
 /**
  *
@@ -80,6 +84,42 @@ public class CourseSessionDaoImpl implements CourseSessionService {
     @Override
     public CourseSession getByLocationId(Integer locationId) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<CourseSession> getAll(int index, int size, String sortField, String sortOrder) {
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        Query selectQuery = session.createQuery("From CourseSession");
+        selectQuery.setFirstResult(index);
+        selectQuery.setMaxResults(size);
+        List<CourseSession> courseList = selectQuery.list();
+        session.close();
+
+        return courseList;
+    }
+
+    @Override
+    public int getCount() {
+
+        session = HibernateUtil.getSessionFactory().openSession();
+        Integer rowCount = (Integer) session.createCriteria("com.utbm.lo54.projetlo54.entity.CourseSession").setProjection(Projections.rowCount()).uniqueResult();
+        session.close();
+        return rowCount;
+    }
+
+    public List<CourseSession> getAll(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters) {
+
+        StringBuilder sb = new StringBuilder();
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        Query selectQuery = session.createQuery("From CourseSession");
+        selectQuery.setFirstResult(index);
+        selectQuery.setMaxResults(size);
+        List<CourseSession> courseList = selectQuery.list();
+        session.close();
+
+        return courseList;
     }
 
 }

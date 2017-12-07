@@ -8,11 +8,16 @@ package com.utbm.lo54.projetlo54.metier;
 import com.utbm.lo54.projetlo54.entity.Location;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.LocationService;
 import com.utbm.lo54.projetlo54.persistence.LocationDaoImpl;
+import java.util.List;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author Jonathan
  */
+@ManagedBean(name = "locationService")
+@ApplicationScoped
 public class LocationServiceImpl implements LocationService {
 
     private LocationService locationDao = new LocationDaoImpl();
@@ -40,6 +45,23 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Location getByCity(String city) throws Exception {
         return locationDao.getByCity(city);
+    }
+
+    @Override
+    public List<Location> getAll(int index, int size, String sortField, String sortOrder) {
+        return locationDao.getAll(index, size, sortField, sortOrder);
+
+    }
+
+    @Override
+    public int getCount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<String> getAllCityNames() {
+
+        return locationDao.getAllCityNames();
     }
 
 }

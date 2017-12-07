@@ -6,6 +6,7 @@
 package com.utbm.lo54.projetlo54.metier.interfaces.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -13,7 +14,7 @@ import java.io.Serializable;
  * @param <T>
  * @param <ID>
  */
-public interface GenericService<T, ID extends Serializable> {
+public interface GenericService<T, ID extends Serializable> extends Serializable {
 
     /**
      * Persist the newInstance object into database
@@ -45,4 +46,8 @@ public interface GenericService<T, ID extends Serializable> {
      * @param persistentObject
      */
     void delete(T persistentObject);
+
+    List<T> getAll(int index, int size, String sortField, String sortOrder);
+
+    int getCount();
 }

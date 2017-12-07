@@ -8,38 +8,57 @@ package com.utbm.lo54.projetlo54.metier;
 import com.utbm.lo54.projetlo54.entity.Course;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.CourseService;
 import com.utbm.lo54.projetlo54.persistence.CourseDaoImpl;
+import java.util.List;
+import java.util.Map;
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author Jonathan
  */
+@ManagedBean(name = "courseService")
+@ApplicationScoped
 public class CourseServiceImpl implements CourseService {
 
-    private CourseService clientDao = new CourseDaoImpl();
+    private CourseService courseDao = new CourseDaoImpl();
 
     @Override
     public Integer create(Course newInstance) {
-        return clientDao.create(newInstance);
+        return courseDao.create(newInstance);
     }
 
     @Override
     public Course read(Integer id) {
-        return clientDao.read(id);
+        return courseDao.read(id);
     }
 
     @Override
     public void update(Course transientObject) {
-        clientDao.update(transientObject);
+        courseDao.update(transientObject);
     }
 
     @Override
     public void delete(Course persistentObject) {
-        clientDao.delete(persistentObject);
+        courseDao.delete(persistentObject);
     }
 
     @Override
     public Course getByTitle(String title) throws Exception {
-        return clientDao.getByTitle(title);
+        return courseDao.getByTitle(title);
     }
 
+    @Override
+    public List<Course> getAll(int index, int size, String sortField, String sortOrder) {
+        return courseDao.getAll(index, size, sortField, sortOrder);
+    }
+
+    @Override
+    public int getCount() {
+        return courseDao.getCount();
+    }
+
+    public List<Course> getAllByTitleKeyWords(int index, int size, String sortField, String sortOrder, Map<String, Object> filters) {
+        return courseDao.getAllByTitleKeyWords(index, size, sortField, sortOrder, filters);
+    }
 }

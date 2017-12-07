@@ -6,6 +6,7 @@
 package com.utbm.lo54.projetlo54.metier.interfaces.service;
 
 import com.utbm.lo54.projetlo54.entity.Location;
+import java.util.List;
 
 /**
  *
@@ -14,5 +15,7 @@ import com.utbm.lo54.projetlo54.entity.Location;
 public interface LocationService extends GenericService<Location, Integer> {
 
     public Location getByCity(String city) throws Exception;
+
+    public List<String> getAllCityNames();
 
 }

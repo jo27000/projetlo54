@@ -6,6 +6,8 @@
 package com.utbm.lo54.projetlo54.metier.interfaces.service;
 
 import com.utbm.lo54.projetlo54.entity.Course;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,5 +16,7 @@ import com.utbm.lo54.projetlo54.entity.Course;
 public interface CourseService extends GenericService<Course, Integer> {
 
     public Course getByTitle(String title) throws Exception;
+
+    public List<Course> getAllByTitleKeyWords(int index, int size, String sortField, String sortOrder, Map<String, Object> filters);
 
 }
