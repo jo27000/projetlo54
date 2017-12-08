@@ -15,8 +15,8 @@ import java.util.Map;
  */
 public interface CourseService extends GenericService<Course, Integer> {
 
-    public Course getByTitle(String title) throws Exception;
+    Course getByTitle(String title) throws Exception;
 
-    public List<Course> getAllByTitleKeyWords(int index, int size, String sortField, String sortOrder, Map<String, Object> filters);
+    List<Course> getAllByTitleKeyWords(int index, int size, String sortField, String sortOrder, Map<String, Object> filters);
 
 }

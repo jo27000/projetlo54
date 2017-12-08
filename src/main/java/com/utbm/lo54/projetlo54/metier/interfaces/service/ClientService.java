@@ -13,18 +13,18 @@ import com.utbm.lo54.projetlo54.entity.Client;
  */
 public interface ClientService extends GenericService<Client, Integer> {
 
-    public Client getByLastName(String lastName) throws Exception;
+    Client getByLastName(String lastName) throws Exception;
 
-    public Client getByFirstName(String firstName) throws Exception;
+    Client getByFirstName(String firstName) throws Exception;
 
-    public Client getByFirstAndLastName(String firstName, String lastName) throws Exception;
+    Client getByFirstAndLastName(String firstName, String lastName) throws Exception;
 
-    public Client getByAddress(String address) throws Exception;
+    Client getByAddress(String address) throws Exception;
 
-    public Client getByPhoneNumber(String phoneNumber) throws Exception;
+    Client getByPhoneNumber(String phoneNumber) throws Exception;
 
-    public Client getByMail(String email) throws Exception;
+    Client getByMail(String email) throws Exception;
 
-    public Client getBySessionCourseId(Integer sessionCourseId) throws Exception;
+    Client getBySessionCourseId(Integer sessionCourseId) throws Exception;
 
 }

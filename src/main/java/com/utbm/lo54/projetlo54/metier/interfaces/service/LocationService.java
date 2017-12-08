@@ -14,8 +14,8 @@ import java.util.List;
  */
 public interface LocationService extends GenericService<Location, Integer> {
 
-    public Location getByCity(String city) throws Exception;
+    Location getByCity(String city) throws Exception;
 
-    public List<String> getAllCityNames();
+    List<String> getAllCityNames();
 
 }

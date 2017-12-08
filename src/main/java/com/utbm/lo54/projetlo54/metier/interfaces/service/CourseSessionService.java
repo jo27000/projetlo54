@@ -7,6 +7,8 @@ package com.utbm.lo54.projetlo54.metier.interfaces.service;
 
 import com.utbm.lo54.projetlo54.entity.CourseSession;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,12 +16,13 @@ import java.util.Calendar;
  */
 public interface CourseSessionService extends GenericService<CourseSession, Integer> {
 
-    public CourseSession getByStartDate(Calendar startDate) throws Exception;
+    CourseSession getByStartDate(Calendar startDate) throws Exception;
 
-    public CourseSession getByEndDate(Calendar endDate) throws Exception;
+    CourseSession getByEndDate(Calendar endDate) throws Exception;
 
-    public CourseSession getByCourseCode(String courseCode) throws Exception;
+    CourseSession getByCourseCode(String courseCode) throws Exception;
 
-    public CourseSession getByLocationId(Integer locationId) throws Exception;
+    CourseSession getByLocationId(Integer locationId) throws Exception;
 
+    List<CourseSession> getAll(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters);
 }

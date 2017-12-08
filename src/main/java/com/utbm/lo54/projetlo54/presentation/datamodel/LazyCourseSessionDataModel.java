@@ -55,10 +55,10 @@ public class LazyCourseSessionDataModel extends LazyDataModel<CourseSession> {
         System.out.println("FILTRES  :  " + filters.toString());
 
         System.out.println("FIN Méthode LOAD ---------");
-        data = courseSessionSrv.getAll(first, pageSize, sortField, sortOrder.toString());
+        data = courseSessionSrv.getAll(first, pageSize, sortField, sortOrder.toString(), filters);
 
         //rowCount
-        this.setRowCount(courseSessionSrv.getCount());
+        this.setRowCount(courseSessionSrv.getCount(filters));
 
         return data;
     }

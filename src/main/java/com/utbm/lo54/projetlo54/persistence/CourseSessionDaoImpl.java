@@ -8,6 +8,7 @@ package com.utbm.lo54.projetlo54.persistence;
 import com.utbm.lo54.projetlo54.entity.CourseSession;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.CourseSessionService;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.Query;
@@ -108,14 +109,45 @@ public class CourseSessionDaoImpl implements CourseSessionService {
         return rowCount;
     }
 
-    public List<CourseSession> getAll(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters) {
+    public int getCount(Map<String, Object> filters) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        Integer rowCount = (Integer) session.createCriteria("com.utbm.lo54.projetlo54.entity.CourseSession").setProjection(Projections.rowCount()).uniqueResult();
+        session.close();
+        return rowCount;
+    }
 
-        StringBuilder sb = new StringBuilder();
+    public List<CourseSession> getAll(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters) {
+        StringBuilder select = new StringBuilder("Select courseSession From CourseSession as courseSession");
+
+        StringBuilder where = new StringBuilder();
+        StringBuilder order = new StringBuilder();
+
+        if (filters != null && !filters.isEmpty()) {
+            where.append(" where ");
+            Iterator entries = filters.entrySet().iterator();
+            while (entries.hasNext()) {
+                Map.Entry entry = (Map.Entry) entries.next();
+                where.append(entry.getKey() + "='" + entry.getValue() + "'");
+                if (entries.hasNext()) {
+                    where.append(" AND ");
+                }
+            }
+
+        }
+        if (sortField != null && !sortField.isEmpty() && sortField != null && !sortField.isEmpty()) {
+            order.append(" order by ");
+            if (sortOrder.equals("ASCENDING")) {
+                order.append(sortField + " ASC");
+            } else {
+                order.append(sortField + " DESC");
+            }
+        }
+        select.append(where).append(order);
         session = HibernateUtil.getSessionFactory().openSession();
 
-        Query selectQuery = session.createQuery("From CourseSession");
-        selectQuery.setFirstResult(index);
-        selectQuery.setMaxResults(size);
+        Query selectQuery = session.createQuery(select.toString());
+        selectQuery.setFirstResult(first);
+        selectQuery.setMaxResults(pageSize);
         List<CourseSession> courseList = selectQuery.list();
         session.close();
 
