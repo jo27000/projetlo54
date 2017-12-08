@@ -10,6 +10,7 @@ import com.utbm.lo54.projetlo54.metier.interfaces.service.CourseSessionService;
 import com.utbm.lo54.projetlo54.persistence.CourseSessionDaoImpl;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -67,6 +68,15 @@ public class CourseSessionServiceImpl implements CourseSessionService {
     @Override
     public int getCount() {
         return courseSessionDao.getCount();
+    }
+
+    public int getCount(Map<String, Object> filters) {
+        return courseSessionDao.getCount(filters);
+    }
+
+    @Override
+    public List<CourseSession> getAll(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters) {
+        return courseSessionDao.getAll(first, pageSize, sortField, sortOrder, filters);
     }
 
 }
