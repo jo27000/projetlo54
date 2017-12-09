@@ -84,7 +84,7 @@ public class LocationDaoImpl implements LocationService {
     public List<String> getAllCityNames() {
 
         session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("select distinct l.city from Location as l");
+        Query query = session.createQuery("select distinct l.city from Location as l order by l.city ASC");
         List<String> list = (List<String>) query.list();
 
         session.close();

@@ -8,12 +8,15 @@ package com.utbm.lo54.projetlo54.persistence;
 import com.utbm.lo54.projetlo54.entity.CourseSession;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.CourseSessionService;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -109,46 +112,64 @@ public class CourseSessionDaoImpl implements CourseSessionService {
         return rowCount;
     }
 
+    @Override
     public int getCount(Map<String, Object> filters) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Integer rowCount = (Integer) session.createCriteria("com.utbm.lo54.projetlo54.entity.CourseSession").setProjection(Projections.rowCount()).uniqueResult();
+        Criteria crit = session.createCriteria("com.utbm.lo54.projetlo54.entity.CourseSession");
+        if (filters != null && !filters.isEmpty()) {
+            for (Map.Entry entry : filters.entrySet()) {
+                if (entry.getKey().toString().contains("city")) {
+                    crit.createAlias("location", "location");
+                    crit.add(Restrictions.eq("location.city", entry.getValue().toString()));
+                }
+                if (entry.getKey().toString().contains("title")) {
+                    crit.createAlias("course", "course");
+                    crit.add(Restrictions.ilike("course.title", entry.getValue().toString(), MatchMode.ANYWHERE));
+                }
+                if (entry.getKey().toString().equals("startDate")) {
+                    crit.add(Restrictions.ge("startDate", entry.getValue()));
+                }
+            }
+        }
+        crit.setProjection(Projections.rowCount());
+        Integer rowCount = (Integer) crit.uniqueResult();
         session.close();
         return rowCount;
     }
 
+    @Override
     public List<CourseSession> getAll(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters) {
-        StringBuilder select = new StringBuilder("Select courseSession From CourseSession as courseSession");
+        session = HibernateUtil.getSessionFactory().openSession();
 
-        StringBuilder where = new StringBuilder();
-        StringBuilder order = new StringBuilder();
-
+        Criteria crit = session.createCriteria("com.utbm.lo54.projetlo54.entity.CourseSession");
+        crit.createAlias("location", "location");
+        crit.createAlias("course", "course");
         if (filters != null && !filters.isEmpty()) {
-            where.append(" where ");
-            Iterator entries = filters.entrySet().iterator();
-            while (entries.hasNext()) {
-                Map.Entry entry = (Map.Entry) entries.next();
-                where.append(entry.getKey() + "='" + entry.getValue() + "'");
-                if (entries.hasNext()) {
-                    where.append(" AND ");
+            for (Map.Entry entry : filters.entrySet()) {
+                if (entry.getKey().toString().contains("city")) {
+                    crit.add(Restrictions.eq("location.city", entry.getValue().toString()));
+                }
+                if (entry.getKey().toString().contains("title")) {
+                    crit.add(Restrictions.ilike("course.title", entry.getValue().toString(), MatchMode.ANYWHERE));
+                }
+                if (entry.getKey().toString().equals("startDate")) {
+                    crit.add(Restrictions.ge("startDate", entry.getValue()));
                 }
             }
 
         }
-        if (sortField != null && !sortField.isEmpty() && sortField != null && !sortField.isEmpty()) {
-            order.append(" order by ");
+        if (sortField != null && !sortField.isEmpty() && sortOrder != null && !sortOrder.isEmpty()) {
+
             if (sortOrder.equals("ASCENDING")) {
-                order.append(sortField + " ASC");
+                crit.addOrder(Order.asc(sortField));
             } else {
-                order.append(sortField + " DESC");
+                crit.addOrder(Order.desc(sortField));
             }
         }
-        select.append(where).append(order);
-        session = HibernateUtil.getSessionFactory().openSession();
 
-        Query selectQuery = session.createQuery(select.toString());
-        selectQuery.setFirstResult(first);
-        selectQuery.setMaxResults(pageSize);
-        List<CourseSession> courseList = selectQuery.list();
+        crit.setFirstResult(first);
+        crit.setMaxResults(pageSize);
+        List<CourseSession> courseList = crit.list();
         session.close();
 
         return courseList;

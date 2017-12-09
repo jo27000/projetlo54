@@ -21,20 +21,18 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 
 @ManagedBean(name = "courseSessionLazyView")
-@SessionScoped
+@ViewScoped
 public class CourseSessionLazyView implements Serializable {
 
     private LazyDataModel<CourseSession> lazyModel;
 
     private CourseSession selectedCourseSession;
-
-    private List<CourseSession> filteredCourseSessionList;
 
     @ManagedProperty("#{courseSessionService}")
     private CourseSessionService courseSessionSrv;
@@ -45,7 +43,7 @@ public class CourseSessionLazyView implements Serializable {
     public void init() {
         courseSessionSrv = new CourseSessionServiceImpl();
         locationSrv = new LocationServiceImpl();
-        lazyModel = new LazyCourseSessionDataModel(courseSessionSrv.getAll(0, 10, null, null));
+        lazyModel = new LazyCourseSessionDataModel();
     }
 
     public LazyDataModel<CourseSession> getLazyModel() {
@@ -67,14 +65,6 @@ public class CourseSessionLazyView implements Serializable {
     public List<String> getCities() {
 
         return locationSrv.getAllCityNames();
-    }
-
-    public List<CourseSession> getFilteredCourseSessionList() {
-        return filteredCourseSessionList;
-    }
-
-    public void setFilteredCourseSessionList(List<CourseSession> filteredCourseSessionList) {
-        this.filteredCourseSessionList = filteredCourseSessionList;
     }
 
     public LocationService getLocationSrv() {

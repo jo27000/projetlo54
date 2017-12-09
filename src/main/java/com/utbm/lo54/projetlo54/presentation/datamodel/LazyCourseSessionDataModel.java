@@ -19,23 +19,15 @@ import org.primefaces.model.SortOrder;
 
 public class LazyCourseSessionDataModel extends LazyDataModel<CourseSession> {
 
-    private List<CourseSession> datasource;
     private CourseSessionService courseSessionSrv;
 
-    public LazyCourseSessionDataModel(List<CourseSession> datasource) {
+    public LazyCourseSessionDataModel() {
         this.courseSessionSrv = new CourseSessionServiceImpl();
-        this.datasource = datasource;
     }
 
     @Override
     public CourseSession getRowData(String rowKey) {
-        for (CourseSession courseSession : datasource) {
-            if (courseSession.getId().toString().equals(rowKey)) {
-                return courseSession;
-            }
-        }
         return courseSessionSrv.read(Integer.valueOf(rowKey));
-
     }
 
     @Override
@@ -56,10 +48,9 @@ public class LazyCourseSessionDataModel extends LazyDataModel<CourseSession> {
 
         System.out.println("FIN Méthode LOAD ---------");
         data = courseSessionSrv.getAll(first, pageSize, sortField, sortOrder.toString(), filters);
-
         //rowCount
         this.setRowCount(courseSessionSrv.getCount(filters));
-
         return data;
     }
+
 }

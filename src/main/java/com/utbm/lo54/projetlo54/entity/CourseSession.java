@@ -6,7 +6,7 @@
 package com.utbm.lo54.projetlo54.entity;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,11 +33,11 @@ public class CourseSession implements Serializable {
 
     @Column(name = "START_DATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar startDate;
+    private Date startDate;
 
     @Column(name = "END_DATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar endDate;
+    private Date endDate;
 
     @ManyToOne
     @JoinColumn(name = "COURSE_CODE", nullable = false)
@@ -50,7 +50,7 @@ public class CourseSession implements Serializable {
     public CourseSession() {
     }
 
-    public CourseSession(Integer id, Calendar startDate, Calendar endDate, Course courseCode, Location location) {
+    public CourseSession(Integer id, Date startDate, Date endDate, Course courseCode, Location location) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -66,19 +66,19 @@ public class CourseSession implements Serializable {
         this.id = id;
     }
 
-    public Calendar getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Calendar startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public Calendar getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Calendar endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

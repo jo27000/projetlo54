@@ -74,39 +74,38 @@ public class DataUtil {
             courseId = (Integer) session.save(c);
             c.setCode(courseId);
         }
-
         List<CourseSession> courseSessionList = new ArrayList<>();
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 1, 8, 8, 0), new GregorianCalendar(2018, 1, 8, 16, 0),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 1, 8, 8, 0).getTime(), new GregorianCalendar(2018, 1, 8, 16, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 1, 12, 14, 0), new GregorianCalendar(2018, 1, 12, 18, 0),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 1, 12, 14, 0).getTime(), new GregorianCalendar(2018, 1, 12, 18, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 1, 10, 9, 30), new GregorianCalendar(2018, 1, 11, 12, 0),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 1, 10, 9, 30).getTime(), new GregorianCalendar(2018, 1, 11, 12, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 3, 1, 8, 0), new GregorianCalendar(2018, 3, 1, 16, 0),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 3, 1, 8, 0).getTime(), new GregorianCalendar(2018, 3, 1, 16, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 5, 8, 8, 0), new GregorianCalendar(2018, 5, 9, 16, 0),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 5, 8, 8, 0).getTime(), new GregorianCalendar(2018, 5, 9, 16, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 6, 8, 8, 0), new GregorianCalendar(2018, 8, 6, 16, 0),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 6, 8, 8, 0).getTime(), new GregorianCalendar(2018, 8, 6, 16, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 1, 8, 8, 0), new GregorianCalendar(2018, 1, 8, 16, 0),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 1, 8, 8, 0).getTime(), new GregorianCalendar(2018, 1, 8, 16, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 9, 1, 14, 0), new GregorianCalendar(2018, 9, 1, 16, 30),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 9, 1, 14, 0).getTime(), new GregorianCalendar(2018, 9, 1, 16, 30).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 11, 10, 8, 0), new GregorianCalendar(2018, 11, 14, 16, 0),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 11, 10, 8, 0).getTime(), new GregorianCalendar(2018, 11, 14, 16, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 12, 5, 8, 0), new GregorianCalendar(2018, 12, 6, 18, 30),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 12, 5, 8, 0).getTime(), new GregorianCalendar(2018, 12, 6, 18, 30).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 12, 5, 8, 0), new GregorianCalendar(2018, 12, 14, 16, 0),
+        courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 12, 5, 8, 0).getTime(), new GregorianCalendar(2018, 12, 14, 16, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
         int courseSessionId;

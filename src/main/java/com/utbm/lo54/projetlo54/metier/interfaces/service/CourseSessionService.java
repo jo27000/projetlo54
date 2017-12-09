@@ -25,4 +25,6 @@ public interface CourseSessionService extends GenericService<CourseSession, Inte
     CourseSession getByLocationId(Integer locationId) throws Exception;
 
     List<CourseSession> getAll(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters);
+
+    int getCount(Map<String, Object> filters);
 }
