@@ -7,11 +7,14 @@ package com.utbm.lo54.projetlo54.persistence;
 
 import com.utbm.lo54.projetlo54.entity.Course;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.CourseService;
+import com.utbm.lo54.projetlo54.persistence.redis.JedisUtil;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
+import redis.clients.jedis.Jedis;
 
 /**
  *
@@ -104,4 +107,18 @@ public class CourseDaoImpl implements CourseService {
         return courseList;
     }
 
+    @Override
+    public String getByIdWithRedis(Integer id) {
+        Jedis jedis = JedisUtil.getConnection();
+        String course = jedis.get(id.toString());
+        return course;
+
+    }
+
+    @Override
+    public Set<String> getIdSetWithRedis() {
+        Jedis jedis = JedisUtil.getConnection();
+        Set<String> keys = jedis.keys("*");
+        return keys;
+    }
 }

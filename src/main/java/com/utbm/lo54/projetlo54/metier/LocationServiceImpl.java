@@ -9,15 +9,11 @@ import com.utbm.lo54.projetlo54.entity.Location;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.LocationService;
 import com.utbm.lo54.projetlo54.persistence.LocationDaoImpl;
 import java.util.List;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author Jonathan
  */
-@ManagedBean(name = "locationService")
-@ApplicationScoped
 public class LocationServiceImpl implements LocationService {
 
     private LocationService locationDao = new LocationDaoImpl();

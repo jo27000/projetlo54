@@ -8,11 +8,13 @@ package com.utbm.lo54.projetlo54.persistence;
 import com.utbm.lo54.projetlo54.entity.Course;
 import com.utbm.lo54.projetlo54.entity.CourseSession;
 import com.utbm.lo54.projetlo54.entity.Location;
+import com.utbm.lo54.projetlo54.persistence.redis.JedisUtil;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 import org.hibernate.Session;
+import redis.clients.jedis.Jedis;
 
 /**
  *
@@ -28,6 +30,8 @@ public class DataUtil {
 
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
+
+        Jedis jedis = JedisUtil.getConnection();
 
         List<Location> locationList = new ArrayList<>();
         locationList.add(new Location(null, "Rouen"));
@@ -63,8 +67,8 @@ public class DataUtil {
         courseList.add(new Course(null, "Chinois"));
         courseList.add(new Course(null, "Coréen"));
 
-        int locId;
-        int courseId;
+        Integer locId;
+        Integer courseId;
         for (Location loc : locationList) {
             locId = (Integer) session.save(loc);
             loc.setId(locId);
@@ -73,6 +77,7 @@ public class DataUtil {
         for (Course c : courseList) {
             courseId = (Integer) session.save(c);
             c.setCode(courseId);
+            jedis.set(courseId.toString(), c.toString());
         }
         List<CourseSession> courseSessionList = new ArrayList<>();
         courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 1, 8, 8, 0).getTime(), new GregorianCalendar(2018, 1, 8, 16, 0).getTime(),
@@ -108,7 +113,7 @@ public class DataUtil {
         courseSessionList.add(new CourseSession(null, new GregorianCalendar(2018, 12, 5, 8, 0).getTime(), new GregorianCalendar(2018, 12, 14, 16, 0).getTime(),
                 courseList.get(randomGenerator.nextInt(courseList.size())), locationList.get(randomGenerator.nextInt(locationList.size()))));
 
-        int courseSessionId;
+        Integer courseSessionId;
         for (CourseSession cs : courseSessionList) {
             courseSessionId = (Integer) session.save(cs);
             cs.setId(courseSessionId);
@@ -116,6 +121,6 @@ public class DataUtil {
         session.getTransaction().commit();
         session.close();
         System.out.println("Initialisation terminée.");
-
+        jedis.close();
     }
 }

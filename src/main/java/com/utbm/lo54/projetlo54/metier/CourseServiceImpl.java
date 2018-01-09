@@ -10,15 +10,12 @@ import com.utbm.lo54.projetlo54.metier.interfaces.service.CourseService;
 import com.utbm.lo54.projetlo54.persistence.CourseDaoImpl;
 import java.util.List;
 import java.util.Map;
-import javax.faces.bean.ApplicationScoped;
-import javax.faces.bean.ManagedBean;
+import java.util.Set;
 
 /**
  *
  * @author Jonathan
  */
-@ManagedBean(name = "courseService")
-@ApplicationScoped
 public class CourseServiceImpl implements CourseService {
 
     private CourseService courseDao = new CourseDaoImpl();
@@ -58,7 +55,19 @@ public class CourseServiceImpl implements CourseService {
         return courseDao.getCount();
     }
 
+    @Override
     public List<Course> getAllByTitleKeyWords(int index, int size, String sortField, String sortOrder, Map<String, Object> filters) {
         return courseDao.getAllByTitleKeyWords(index, size, sortField, sortOrder, filters);
+    }
+
+    @Override
+    public String getByIdWithRedis(Integer id) {
+        return courseDao.getByIdWithRedis(id);
+
+    }
+
+    @Override
+    public Set<String> getIdSetWithRedis() {
+        return courseDao.getIdSetWithRedis();
     }
 }

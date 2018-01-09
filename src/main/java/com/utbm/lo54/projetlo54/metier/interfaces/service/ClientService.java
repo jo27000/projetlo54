@@ -27,4 +27,6 @@ public interface ClientService extends GenericService<Client, Integer> {
 
     Client getBySessionCourseId(Integer sessionCourseId) throws Exception;
 
+    Integer getCountByCourseSession(Integer id);
+
 }

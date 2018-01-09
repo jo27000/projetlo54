@@ -40,19 +40,19 @@ public class Client implements Serializable {
     private String email;
     @OneToOne(targetEntity = CourseSession.class)
     @JoinColumn(name = "COURSE_SESSION_ID")
-    private CourseSession sessionCourse;
+    private CourseSession courseSession;
 
     public Client() {
     }
 
-    public Client(Integer id, String lastName, String firstName, String address, String phoneNumber, String email, CourseSession sessionCourse) {
+    public Client(Integer id, String lastName, String firstName, String address, String phoneNumber, String email, CourseSession courseSession) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.sessionCourse = sessionCourse;
+        this.courseSession = courseSession;
     }
 
     public Integer getId() {
@@ -103,12 +103,12 @@ public class Client implements Serializable {
         this.email = email;
     }
 
-    public CourseSession getSessionCourse() {
-        return sessionCourse;
+    public CourseSession getCourseSession() {
+        return courseSession;
     }
 
-    public void setSessionCourse(CourseSession sessionCourse) {
-        this.sessionCourse = sessionCourse;
+    public void setCourseSession(CourseSession courseSession) {
+        this.courseSession = courseSession;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class Client implements Serializable {
         hash = 53 * hash + Objects.hashCode(this.address);
         hash = 53 * hash + Objects.hashCode(this.phoneNumber);
         hash = 53 * hash + Objects.hashCode(this.email);
-        hash = 53 * hash + Objects.hashCode(this.sessionCourse);
+        hash = 53 * hash + Objects.hashCode(this.courseSession);
         return hash;
     }
 
@@ -154,7 +154,7 @@ public class Client implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.sessionCourse, other.sessionCourse)) {
+        if (!Objects.equals(this.courseSession, other.courseSession)) {
             return false;
         }
         return true;
@@ -162,7 +162,7 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "Client{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", email=" + email + ", sessionCourse=" + sessionCourse + '}';
+        return "Client{" + "id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", address=" + address + ", phoneNumber=" + phoneNumber + ", email=" + email + ", courseSession=" + courseSession + '}';
     }
 
 }

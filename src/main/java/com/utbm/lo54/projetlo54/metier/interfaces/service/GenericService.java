@@ -16,35 +16,12 @@ import java.util.List;
  */
 public interface GenericService<T, ID extends Serializable> extends Serializable {
 
-    /**
-     * Persist the newInstance object into database
-     *
-     * @param newInstance
-     * @return
-     */
     ID create(T newInstance);
 
-    /**
-     * Retrieve an object that was previously persisted to the database using
-     * the indicated id as primary key
-     *
-     * @param id
-     * @return
-     */
     T read(ID id);
 
-    /**
-     * Save changes made to a persistent object.
-     *
-     * @param transientObject
-     */
     void update(T transientObject);
 
-    /**
-     * Remove an object from persistent storage in the database
-     *
-     * @param persistentObject
-     */
     void delete(T persistentObject);
 
     List<T> getAll(int index, int size, String sortField, String sortOrder);

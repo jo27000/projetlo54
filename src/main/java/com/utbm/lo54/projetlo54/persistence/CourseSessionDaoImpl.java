@@ -7,9 +7,15 @@ package com.utbm.lo54.projetlo54.persistence;
 
 import com.utbm.lo54.projetlo54.entity.CourseSession;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.CourseSessionService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -25,6 +31,8 @@ import org.hibernate.criterion.Restrictions;
 public class CourseSessionDaoImpl implements CourseSessionService {
 
     private Session session;
+    SimpleDateFormat formatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+    SimpleDateFormat finalFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
     @Override
     public Integer create(CourseSession newInstance) {
@@ -127,7 +135,14 @@ public class CourseSessionDaoImpl implements CourseSessionService {
                     crit.add(Restrictions.ilike("course.title", entry.getValue().toString(), MatchMode.ANYWHERE));
                 }
                 if (entry.getKey().toString().equals("startDate")) {
-                    crit.add(Restrictions.ge("startDate", entry.getValue()));
+                    try {
+                        Date startDate = formatter.parse(entry.getValue().toString());
+                        Date endDate = new Date(startDate.getTime() + 86400 * 1000);
+
+                        crit.add(Restrictions.between("startDate", startDate, endDate));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(CourseSessionDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
@@ -153,7 +168,14 @@ public class CourseSessionDaoImpl implements CourseSessionService {
                     crit.add(Restrictions.ilike("course.title", entry.getValue().toString(), MatchMode.ANYWHERE));
                 }
                 if (entry.getKey().toString().equals("startDate")) {
-                    crit.add(Restrictions.ge("startDate", entry.getValue()));
+                    try {
+                        Date startDate = formatter.parse(entry.getValue().toString());
+                        Date endDate = new Date(startDate.getTime() + 86400 * 1000);
+
+                        crit.add(Restrictions.between("startDate", startDate, endDate));
+                    } catch (ParseException ex) {
+                        Logger.getLogger(CourseSessionDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
 

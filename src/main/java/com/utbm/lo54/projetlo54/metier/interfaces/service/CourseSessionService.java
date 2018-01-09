@@ -27,4 +27,5 @@ public interface CourseSessionService extends GenericService<CourseSession, Inte
     List<CourseSession> getAll(int first, int pageSize, String sortField, String sortOrder, Map<String, Object> filters);
 
     int getCount(Map<String, Object> filters);
+
 }

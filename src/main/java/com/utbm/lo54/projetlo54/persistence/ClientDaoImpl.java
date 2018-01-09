@@ -8,9 +8,11 @@ package com.utbm.lo54.projetlo54.persistence;
 import com.utbm.lo54.projetlo54.entity.Client;
 import com.utbm.lo54.projetlo54.metier.interfaces.service.ClientService;
 import java.util.List;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -24,7 +26,7 @@ public class ClientDaoImpl implements ClientService {
     public Integer create(Client newInstance) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-
+        newInstance.setPhoneNumber(newInstance.getPhoneNumber().replaceAll("-", ""));
         Integer id = (Integer) session.save(newInstance);
         session.getTransaction().commit();
         session.close();
@@ -122,4 +124,18 @@ public class ClientDaoImpl implements ClientService {
         return count;
     }
 
+    @Override
+    public Integer getCountByCourseSession(Integer id) {
+        if (id == null) {
+            return null;
+        }
+        session = HibernateUtil.getSessionFactory().openSession();
+        Criteria crit = session.createCriteria("com.utbm.lo54.projetlo54.entity.Client");
+        crit.createAlias("courseSession", "courseSession");
+        crit.add(Restrictions.eq("courseSession.id", id));
+        crit.setProjection(Projections.rowCount());
+        Integer rowCount = (Integer) crit.uniqueResult();
+        session.close();
+        return rowCount;
+    }
 }

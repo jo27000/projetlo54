@@ -5,6 +5,7 @@
  */
 package com.utbm.lo54.projetlo54.persistence;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
@@ -20,13 +21,10 @@ public class HibernateUtil {
 
     static {
         try {
-            // Create the SessionFactory from standard (hibernate.cfg.xml)
-            // config file.
             sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
 
-            new DataUtil().initBase();
-        } catch (Throwable ex) {
-            // Log the exception.
+            // new DataUtil().initBase();
+        } catch (HibernateException ex) {
             System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }

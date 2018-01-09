@@ -10,11 +10,13 @@
         </h:head>
 
         <h:body>
+            <p:growl id="growl" showDetail="true" globalOnly="true" life="5000"/>
+            <p:separator />
             <h:form id="form">
                 <p:dataTable var="courseSession" value="#{courseSessionLazyView.lazyModel}" paginator="true" rows="5"
                              widgetVar="courseSessionTable" emptyMessage="Aucune session correspondant à la recherche" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                              rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{courseSessionLazyView.selectedCourseSession}" id="courseSessionTable" lazy="true">
-                    <p:ajax event="rowSelect" listener="#{courseSessionLazyView.onRowSelect}" update=":form:courseSessionDetail" oncomplete="PF('courseSessionDialog').show()" />
+                    <p:ajax event="rowSelect" listener="#{courseSessionLazyView.onRowSelect}" update=":form:courseSessionDialog" oncomplete="PF('courseSessionDialog').show()" />
                     <p:column headerText="Type de formation" sortBy="#{courseSession.course.title}" filterBy="#{courseSession.course.title}" >
                         <h:outputText value="#{courseSession.course.title}" />
                     </p:column>
@@ -35,39 +37,66 @@
                                 <p:ajax event="dateSelect" oncomplete="PF('courseSessionTable').filter()" update=":form:courseSessionTable" />
                             </p:calendar>
                         </f:facet>
-                        <h:outputText value="#{courseSession.startDate}" >
-                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+                        <h:outputText id="dateFilter" value="#{courseSession.startDate}" >
+                            <f:convertDateTime pattern="dd-MM-yyyy à HH'h'mm" />
                         </h:outputText>
                     </p:column>
-
-                    <!--
-                                    <p:column filterBy="#{courseSession.startDate}" headerText="Date">
-                                        <f:facet name="filter">
-                                            <p:calendar  pattern="dd/MM/yyyy" value="#{courseSession.startDate}">
-                                                <p:ajax event="dateSelect"  oncomplete="PF('seasonDataTable').filter()"/>
-                                            </p:calendar>
-                                        </f:facet>
-                                    </p:column>-->
-
                 </p:dataTable>
 
 
+                <p:dialog id="courseSessionDialog" widgetVar="courseSessionDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:panel header="Description de la session" >
+                        <h:panelGrid id="selectedCourseSessionId" columns="2" cellpadding="5">
+                            <h:outputLabel  value="Formation : " style="font-weight:bold"/>
+                            <h:outputText  value="#{courseSessionLazyView.selectedCourseSession.course.title}" style="font-weight:bold"/>
 
+                            <h:outputLabel  value="Lieu :" style="font-weight:bold"/>
+                            <h:outputText  value="#{courseSessionLazyView.selectedCourseSession.location.city}" style="font-weight:bold"/>
 
+                            <h:outputLabel  value="Date :" style="font-weight:bold"/>
+                            <h:outputText value="#{courseSessionLazyView.selectedCourseSession.startDate}" style="font-weight:bold">
+                                <f:convertDateTime pattern="dd-MM-yyyy à HH'h'mm" />
+                            </h:outputText>
 
+                            <h:outputLabel  value="Nombre d'inscrits :" style="font-weight:bold"/>
+                            <h:outputText  value="#{courseSessionLazyView.registeredCount}" style="font-weight:bold"/>
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel id="courseSessionDetail" header="S'inscrire à cette session" style="margin-top: 10px">
+                        <h:panelGrid id="grid" columns="2" cellpadding="5">
+                            <h:outputLabel for="lastName" value="Nom :" style="font-weight:bold"/>
+                            <p:inputText id="lastName" value="#{courseSessionLazyView.client.lastName}" required="true" label="Nom"/>
 
-                <p:dialog header="Détail de la session" widgetVar="courseSessionDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                    <p:outputPanel id="courseSessionDetail" style="text-align:center;">
-                        <p:panelGrid  columns="2" rendered="#{not empty courseLazyView.selectedCourse}" columnClasses="label,value">
-                            <h:outputText value="Id:" />
-                            <h:outputText value="#{courseSessionLazyView.selectedCourseSession.id}" />
+                            <h:outputLabel for="firstName" value="Prenom :" style="font-weight:bold"/>
+                            <p:inputText id="firstName" value="#{courseSessionLazyView.client.firstName}" required="true" label="Prenom"/>
 
-                            <h:outputText value="Lieu" />
-                            <h:outputText value="#{courseSessionLazyView.selectedCourseSession.location.city}" />
-                        </p:panelGrid>
-                    </p:outputPanel>
+                            <h:outputLabel for="address" value="Adresse :" style="font-weight:bold"/>
+                            <p:inputText id="address" value="#{courseSessionLazyView.client.address}" required="true" label="Adresse"/>
+
+                            <h:outputLabel for="mail" value="Mail :" style="font-weight:bold"/>
+                            <p:inputText id="mail" value="#{courseSessionLazyView.client.email}" required="true" label="Mail"/>
+
+                            <p:outputLabel for="phone" value="Téléphone :" style="font-weight:bold"/>
+                            <p:inputMask id="phone" value="#{courseSessionLazyView.client.phoneNumber}" mask="99-99-99-99-99" required="true" label="Téléphone"/>
+
+                        </h:panelGrid>
+                        <p:commandButton value="S'inscrire" update="courseSessionDetail :growl" icon="ui-icon-check" actionListener="#{courseSessionLazyView.registerUser()}" style="margin-top: 50px;margin-left: 100px"/>
+                    </p:panel>
+
                 </p:dialog>
+
             </h:form>
+            <p:separator />
+            <h:outputText value="Cours depuis REDIS" />
+            <p:dataTable id="jedisdt" value="#{courseSessionLazyView.redisCourseMapEntryList}" var="courseEntry">
+                <p:column headerText="Id du cours">
+                    <h:outputText value="#{courseEntry.key}" />
+                </p:column>
+                <p:column headerText="Contenu au format String">
+                    <h:outputText value="#{courseEntry.value}" />
+                </p:column>
+            </p:dataTable>
+
         </h:body>
     </f:view>
 </html>

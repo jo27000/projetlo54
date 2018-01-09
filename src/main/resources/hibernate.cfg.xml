@@ -47,7 +47,8 @@ Contributor(s):
         <property name="hibernate.connection.username">lo54</property>
         <property name="hibernate.connection.password">lo54</property>
 
-        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.auto">validate</property>
+        <!--        <property name="hbm2ddl.auto">create</property>-->
 
 
         <property name="show_sql" >true</property>
